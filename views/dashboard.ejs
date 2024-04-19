@@ -88,6 +88,9 @@
     <div>
       <div>
         <table>
+          <caption>
+            Your Coupons
+          </caption>
           <thead>
             <tr>
               <th>Name</th>
@@ -99,7 +102,8 @@
           <tbody>
             <% coupons.forEach(function(coupon) { %>
             <tr>
-              <td><%= coupon.name %></td>
+              <td><a href="/api/coupon/<%= coupon._id%>""><%= coupon.name %></a></td>
+
               <td><%= coupon.description %></td>
               <td><%= coupon.discount %></td>
               <td><%= coupon.validTill %></td>

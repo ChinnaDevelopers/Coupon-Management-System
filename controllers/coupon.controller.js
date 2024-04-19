@@ -38,6 +38,7 @@ exports.updateCoupon = async (req, res) => {
   if (!validFrom) throw new Error("Valid from date is required");
   if (!validTill) throw new Error("Valid till date is required");
 
+  console.log(req.params.id);
   await Coupon.findByIdAndUpdate(
     req.params.id,
     {
@@ -49,12 +50,18 @@ exports.updateCoupon = async (req, res) => {
       validFrom,
       validTill,
     },
-    { new: true }
+    {
+      runValidators: true,
+    }
   );
   res.status(200).redirect("/api/user/");
 };
 
 exports.getCoupon = async (req, res) => {
   const coupon = await Coupon.findById(req.params.id);
-  res.status(200).render("updateCoupon", { user: req.user, coupon });
+  const validFrom = coupon.validFrom.toISOString().slice(0, 16);
+  const validTill = coupon.validTill.toISOString().slice(0, 16);
+  res
+    .status(200)
+    .render("updateCoupon", { user: req.user, coupon, validFrom, validTill });
 };
