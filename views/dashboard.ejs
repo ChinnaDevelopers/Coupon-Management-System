@@ -3,22 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script>
-      // this script is to prevent the user from going back to the login page after logging in
-      if (window.history.replaceState) {
-        window.history.replaceState(null, null, window.location.href);
-      }
-    </script>
     <style>
       body {
         font-family: Arial, sans-serif;
         margin: 0;
         padding: 0;
-        background-color: #f4f4f4;
+        background-color: #333;
+        color: #fff;
       }
       h1 {
         text-align: center;
-        color: #333;
+        color: #fff;
         margin-top: 50px;
       }
       p {
@@ -27,28 +22,92 @@
       }
       a {
         text-decoration: none;
-        color: #333;
-        background-color: #f4f4f4;
+        color: #fff;
+        background-color: #555;
         padding: 5px 10px;
         border-radius: 5px;
         margin: 0 10px;
       }
-      
+      .user-details {
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 10px;
+      }
+      .logout {
+        color: red;
+        background-color: #555;
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 10px;
+      }
+      .api {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        padding: 10px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        color: #fff;
+      }
+      th {
+        background-color: #555;
+        padding: 10px;
+      }
+      td {
+        padding: 10px;
+      }
+      tr:nth-child(even) {
+        background-color: #444;
+      }
+      tr:nth-child(odd) {
+        background-color: #333;
+      }
     </style>
     <title>User Dashboard</title>
   </head>
   <body>
-    <h1>Welcome to the User Dashboard, <%= user.name%></h1>
+    <div class="user-details">
+      <p>Organization: <%= user.organization %></p>
+      <p>Email: <%= user.email %></p>
+    </div>
+    <h1>Welcome to the User Dashboard, <%= user.name %></h1>
     <p>
-      <a href="/api/coupon/create">Create a Coupon</a> or
-      <a href="/api/coupon/list">View Coupons</a>
+      <a href="/api/coupon/create">Create a Coupon</a>
     </p>
     <p>
-      <a href="/api/user/logout">Logout</a>
+      <a href="/api/user/logout" class="logout">Logout</a>
     </p>
-    <!-- to have a brief on this project, here's the API documentation  -->
     <p>
-      <a href="/api-docs">API Documentation</a>
+      <a href="/api-docs" class="api">API Documentation</a>
     </p>
+
+    <div>
+      <div>
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Discount</th>
+              <th>ValidTill</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% coupons.forEach(function(coupon) { %>
+            <tr>
+              <td><%= coupon.name %></td>
+              <td><%= coupon.description %></td>
+              <td><%= coupon.discount %></td>
+              <td><%= coupon.validTill %></td>
+            </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </body>
 </html>

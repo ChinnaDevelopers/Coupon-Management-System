@@ -1,6 +1,5 @@
 const User = require("../models/user.model");
 const Coupon = require("../models/coupon.model");
-const jwt = require("jsonwebtoken");
 const cookieToken = require("../utils/cookieToken");
 
 exports.register = async (req, res) => {
@@ -11,25 +10,23 @@ exports.register = async (req, res) => {
   if (!email) throw new Error("Email is required");
   if (!password) throw new Error("Password is required");
 
-  const user = await User.create({
-    name,
-    organization,
-    email,
-    password,
-  });
+  const user = await User.create(
+    {
+      name,
+      organization,
+      email,
+      password,
+    },
+    { runValidators: true }
+  );
   cookieToken(user, res);
 };
 
 exports.login = async (req, res) => {
-  if (req.headers.cookie) {
-    const id = req.headers.cookie.split("=")[1];
-    const user_id = jwt.verify(id, process.env.JWT_SECRET);
-    const user = await User.findById(user_id._id).select("-password");
-    return res.status(200).json({
-      user,
-    });
-  }
   const { email, password } = req.body;
+  if (!email && !password && req.headers.cookie) {
+    return res.redirect("/api/user/");
+  }
 
   if (!email) throw new Error("Email is required");
   if (!password) throw new Error("Password is required");
@@ -40,11 +37,10 @@ exports.login = async (req, res) => {
 
   if (!user) throw new Error("Invalid credentials");
 
-  console.log(user);
-
   if (!user.comparePassword(password)) throw new Error("Invalid credentials");
   user.password = undefined;
-  res.redirect("/api/user/" + user._id);
+  cookieToken(user, res, "login");
+  res.redirect("/api/user/");
 };
 
 exports.logout = (req, res) => {
@@ -53,8 +49,8 @@ exports.logout = (req, res) => {
 };
 
 exports.getUser = async (req, res) => {
-  const { id } = req.params;
-  if (!id) throw new Error("User ID is required");
-  const user = await User.findById(id).select("-password");
-  res.status(200).render("dashboard", { user });
+  const coupons = await Coupon.find({ user_id: req.user._id }).sort({
+    validTill: 1,
+  });
+  res.status(200).render("dashboard", { user: req.user, coupons });
 };

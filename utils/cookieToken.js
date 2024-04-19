@@ -1,4 +1,4 @@
-const cookieToken = (user, res) => {
+const cookieToken = (user, res, option) => {
   const token = user.createJWTToken();
 
   const options = {
@@ -6,9 +6,13 @@ const cookieToken = (user, res) => {
     httpOnly: true,
   };
 
+  if (option === "login") {
+    return res.status(200).cookie("token", token, options);
+  }
+  user.password = undefined;
   res.status(200).cookie("token", token, options).json({
     sucess: true,
-    token,
+    user,
   });
 };
 
