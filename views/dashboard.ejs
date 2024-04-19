@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      // this script is to prevent the user from going back to the login page after logging in
+      if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+      }
+    </script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+      }
+      h1 {
+        text-align: center;
+        color: #333;
+        margin-top: 50px;
+      }
+      p {
+        text-align: center;
+        margin-top: 20px;
+      }
+      a {
+        text-decoration: none;
+        color: #333;
+        background-color: #f4f4f4;
+        padding: 5px 10px;
+        border-radius: 5px;
+        margin: 0 10px;
+      }
+      
+    </style>
+    <title>User Dashboard</title>
+  </head>
+  <body>
+    <h1>Welcome to the User Dashboard, <%= user.name%></h1>
+    <p>
+      <a href="/api/coupon/create">Create a Coupon</a> or
+      <a href="/api/coupon/list">View Coupons</a>
+    </p>
+    <p>
+      <a href="/api/user/logout">Logout</a>
+    </p>
+    <!-- to have a brief on this project, here's the API documentation  -->
+    <p>
+      <a href="/api-docs">API Documentation</a>
+    </p>
+  </body>
+</html>

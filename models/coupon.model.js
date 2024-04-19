@@ -6,6 +6,11 @@ const couponSchema = new mongoose.Schema(
       type: String,
       required: [true, "Name is required"],
     },
+    user_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: [true, "User ID is required"],
+      ref: "User",
+    },
     count: {
       type: Number,
       required: [true, "Count is required"],
