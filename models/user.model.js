@@ -21,6 +21,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, "Password is required"],
     },
+    api_keys: {
+      type: Array,
+      default: [],
+    },
   },
   {
     timestamps: true,
@@ -39,6 +43,12 @@ userSchema.methods.comparePassword = function (password) {
 
 userSchema.methods.createJWTToken = function () {
   return jwt.sign({ _id: this._id }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRES,
+  });
+};
+
+userSchema.methods.createAPIKey = function (tokenName) {
+  return jwt.sign({ _id: this._id, tokenName }, process.env.API_SECRET, {
     expiresIn: process.env.JWT_EXPIRES,
   });
 };

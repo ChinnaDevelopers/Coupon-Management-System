@@ -6,6 +6,8 @@ const {
   login,
   getUser,
   logout,
+  tokens,
+  createToken,
 } = require("../controllers/user.controller");
 const { isLoggedIn } = require("../utils/isLoggedIn");
 
@@ -18,7 +20,11 @@ router.get("/login", (req, res) => {
 });
 router.post("/register", register);
 router.post("/login", login);
+
+router.use(isLoggedIn);
+router.get("/", getUser);
 router.get("/logout", logout);
-router.get("/", isLoggedIn, getUser);
+router.get("/tokens", tokens);
+router.post("/tokens", createToken);
 
 module.exports = router;

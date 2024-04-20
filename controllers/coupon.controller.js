@@ -38,7 +38,6 @@ exports.updateCoupon = async (req, res) => {
   if (!validFrom) throw new Error("Valid from date is required");
   if (!validTill) throw new Error("Valid till date is required");
 
-  console.log(req.params.id);
   await Coupon.findByIdAndUpdate(
     req.params.id,
     {
