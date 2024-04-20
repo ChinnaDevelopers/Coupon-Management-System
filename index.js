@@ -6,9 +6,11 @@ const app = express();
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./swagger.json");
 const errorHandler = require("./utils/errorHandler");
+const cookieParser = require("cookie-parser");
 const PORT = process.env.PORT || 3000;
 
 // Middlewares
+app.use(cookieParser());
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -21,9 +23,12 @@ app.get("/", (req, res) => {
 // Importing routes
 const userRoutes = require("./routes/user.routes");
 const couponRoutes = require("./routes/coupon.routes");
+const apiRoutes = require("./routes/api.routes");
 
 app.use("/api/user", userRoutes);
 app.use("/api/coupon", couponRoutes);
+
+app.use("/api", apiRoutes);
 
 app.get("*", (req, res) => {
   res.status(404).json({

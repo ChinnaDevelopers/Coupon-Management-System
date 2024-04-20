@@ -11,8 +11,8 @@ const cookieToken = (user, res, option) => {
   }
   user.password = undefined;
   res.status(200).cookie("token", token, options).json({
-    sucess: true,
-    user,
+    status: 200,
+    goto: "http://localhost:3000/api/user/",
   });
 };
 

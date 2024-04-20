@@ -22,7 +22,9 @@ exports.register = async (req, res) => {
 
 exports.login = async (req, res) => {
   const { email, password } = req.body;
-  if (!email && !password && req.headers.cookie) {
+  console.log(req);
+
+  if (!email && !password && req.cookies.token) {
     return res.redirect("/api/user/");
   }
 
@@ -42,8 +44,15 @@ exports.login = async (req, res) => {
 };
 
 exports.logout = (req, res) => {
-  res.clearCookie("token");
-  res.redirect("/api/user/login");
+  res.cookie("token", null, {
+    expires: new Date(Date.now()),
+    httpOnly: true,
+  });
+  res.status(200).json({
+    success: true,
+    message: "Logged out successfully",
+  });
+  // res.redirect("/api/user/login");
 };
 
 exports.getUser = async (req, res) => {
@@ -53,7 +62,7 @@ exports.getUser = async (req, res) => {
   res.status(200).render("dashboard", { user: req.user, coupons });
 };
 
-exports.tokens = async (req, res) => {
+exports.api_keys = async (req, res) => {
   const user = await User.findById(req.user._id);
   res.status(200).render("api", { apis: user.api_keys });
 };
