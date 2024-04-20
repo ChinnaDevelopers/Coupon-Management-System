@@ -104,6 +104,11 @@
         margin: 10px;
         color: black;
       }
+      input {
+        margin: 10px;
+        padding: 5px;
+      }
+      
     </style>
 
     <title>APIs</title>
@@ -124,7 +129,11 @@
         <% apis.forEach(api => { %>
         <tr>
           <td><%= api.apiName %></td>
-          <td><%= api.apiKey %></td>
+          <td>
+            <a href="" data-api-key="<%= api.apiKey %>"
+              ><%= api.apiKey.substring(0,15)+ '....' %></a
+            >
+          </td>
           <td><%= api.createdAt %></td>
         </tr>
         <% }); %>
@@ -160,6 +169,19 @@
         cancel.addEventListener("click", () => {
           modal.classList.add("hidden"); // Hide the modal
           backdrop.classList.add("hidden"); // Hide the backdrop
+        });
+      });
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const apiLinks = document.querySelectorAll("a[data-api-key]");
+
+        apiLinks.forEach((link) => {
+          link.addEventListener("click", (event) => {
+            event.preventDefault(); // Prevent the link from navigating to a new page
+
+            const apiKey = event.currentTarget.getAttribute("data-api-key");
+            navigator.clipboard.writeText(apiKey); // Copy the API key to the clipboard
+          });
         });
       });
     </script>
