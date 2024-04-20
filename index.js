@@ -27,7 +27,6 @@ const apiRoutes = require("./routes/api.routes");
 
 app.use("/api/user", userRoutes);
 app.use("/api/coupon", couponRoutes);
-
 app.use("/api", apiRoutes);
 
 app.get("*", (req, res) => {

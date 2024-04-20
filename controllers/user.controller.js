@@ -22,7 +22,6 @@ exports.register = async (req, res) => {
 
 exports.login = async (req, res) => {
   const { email, password } = req.body;
-  console.log(req);
 
   if (!email && !password && req.cookies.token) {
     return res.redirect("/api/user/");
@@ -48,11 +47,11 @@ exports.logout = (req, res) => {
     expires: new Date(Date.now()),
     httpOnly: true,
   });
+
   res.status(200).json({
     success: true,
     message: "Logged out successfully",
   });
-  // res.redirect("/api/user/login");
 };
 
 exports.getUser = async (req, res) => {

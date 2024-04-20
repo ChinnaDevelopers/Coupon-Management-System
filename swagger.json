@@ -5,11 +5,16 @@
     "description": "API documentation for the Coupons API",
     "version": "1.0.0"
   },
+  "servers": [
+    {
+      "url": "http://localhost:3000/api",
+      "description": "Local development server"
+    }
+  ],
   "paths": {
     "/coupons": {
       "get": {
         "summary": "Get all coupons",
-        "description": "Returns a list of all available coupons",
         "responses": {
           "200": {
             "description": "Successful response",
@@ -28,13 +33,12 @@
       },
       "post": {
         "summary": "Create a new coupon",
-        "description": "Creates a new coupon with the provided details",
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CouponInput"
+                "$ref": "#/components/schemas/Coupon"
               }
             }
           }
@@ -56,7 +60,6 @@
     "/coupons/{id}": {
       "get": {
         "summary": "Get a coupon by ID",
-        "description": "Returns the details of a coupon with the specified ID",
         "parameters": [
           {
             "name": "id",
@@ -64,8 +67,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": "ID of the coupon"
+            }
           }
         ],
         "responses": {
@@ -78,15 +80,11 @@
                 }
               }
             }
-          },
-          "404": {
-            "description": "Coupon not found"
           }
         }
       },
       "put": {
-        "summary": "Update a coupon",
-        "description": "Updates the details of a coupon with the specified ID",
+        "summary": "Update a coupon by ID",
         "parameters": [
           {
             "name": "id",
@@ -94,8 +92,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": "ID of the coupon"
+            }
           }
         ],
         "requestBody": {
@@ -103,7 +100,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CouponInput"
+                "$ref": "#/components/schemas/Coupon"
               }
             }
           }
@@ -118,15 +115,11 @@
                 }
               }
             }
-          },
-          "404": {
-            "description": "Coupon not found"
           }
         }
       },
       "delete": {
-        "summary": "Delete a coupon",
-        "description": "Deletes a coupon with the specified ID",
+        "summary": "Delete a coupon by ID",
         "parameters": [
           {
             "name": "id",
@@ -134,16 +127,12 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": "ID of the coupon"
+            }
           }
         ],
         "responses": {
           "204": {
             "description": "Coupon deleted successfully"
-          },
-          "404": {
-            "description": "Coupon not found"
           }
         }
       }
@@ -162,28 +151,8 @@
           },
           "discount": {
             "type": "number"
-          },
-          "expiryDate": {
-            "type": "string",
-            "format": "date"
           }
         }
-      },
-      "CouponInput": {
-        "type": "object",
-        "properties": {
-          "code": {
-            "type": "string"
-          },
-          "discount": {
-            "type": "number"
-          },
-          "expiryDate": {
-            "type": "string",
-            "format": "date"
-          }
-        },
-        "required": ["code", "discount", "expiryDate"]
       }
     }
   }
