@@ -4,18 +4,16 @@ This is a RESTful API for managing coupons.
 
 ## Features
 
-- Create, read, update, and delete coupons
-- Search for coupons by various criteria
-- Apply coupons to orders
-- Generate unique coupon codes
-- Track coupon usage and statistics
+- Register and Login the user
+- Create, update, access and use coupons
+- Create api-keys to access coupons (can be used as third party apis)
 
 ## Installation
 
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/coupons-api.git
+   git clone https://github.com/ManoharNaidu/Coupon-API.git
    ```
 
 2. Install the dependencies:
@@ -26,18 +24,17 @@ This is a RESTful API for managing coupons.
 
 3. Set up the database:
 
-   - Create a PostgreSQL database
-   - Update the database configuration in `config/database.js`
+   - Create a MongoDB database of yours and use URI in env to access
 
 4. Start the server:
 
    ```bash
-   npm start
+   npm run dev
    ```
 
 ## API Documentation
 
-For detailed information on how to use the API, please refer to the [API documentation](docs/api.md).
+For detailed information on how to use the API, please refer to the /api-docs after starting the server.
 
 ## Contributing
 
