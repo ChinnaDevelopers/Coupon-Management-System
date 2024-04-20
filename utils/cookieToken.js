@@ -12,7 +12,7 @@ const cookieToken = (user, res, option) => {
   user.password = undefined;
   res.status(200).cookie("token", token, options).json({
     status: 200,
-    goto: "http://localhost:3000/api/user/",
+    goto: "https://coupon-api-l11h.onrender.com/api/user/",
   });
 };
 
