@@ -3,116 +3,69 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #333;
-        color: #fff;
-      }
-      h1 {
-        text-align: center;
-        color: #fff;
-        margin-top: 50px;
-      }
-      p {
-        text-align: center;
-        margin-top: 20px;
-      }
-      a {
-        text-decoration: none;
-        color: #fff;
-        background-color: #555;
-        padding: 5px 10px;
-        border-radius: 5px;
-        margin: 0 10px;
-      }
-      .user-details {
-        position: absolute;
-        top: 0;
-        left: 0;
-        padding: 10px;
-      }
-      .logout {
-        color: red;
-        background-color: #555;
-        position: absolute;
-        top: 0;
-        right: 0;
-        padding: 10px;
-      }
-      .api {
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        padding: 10px;
-      }
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        color: #fff;
-      }
-      th {
-        background-color: #555;
-        padding: 10px;
-      }
-      td {
-        padding: 10px;
-      }
-      tr:nth-child(even) {
-        background-color: #444;
-      }
-      tr:nth-child(odd) {
-        background-color: #333;
-      }
-      
-    </style>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
     <title>User Dashboard</title>
   </head>
-  <body>
-    <div class="user-details">
-      <p>Organization: <%= user.organization %></p>
-      <p>Email: <%= user.email %></p>
+  <body class="container bg-dark text-white d-flex flex-column vh-100">
+    <div class="d-flex justify-content-between">
+      <div class="user-details">
+        <p>Org: <%= user.organization %></p>
+        <p>Mail: <%= user.email %></p>
+      </div>
+      <p>
+        <a href="/api/user/logout" class="logout btn btn-primary bg-dark"
+          >Logout</a
+        >
+      </p>
     </div>
-    <h1>Welcome to the User Dashboard, <%= user.name %></h1>
+    <h1>Welcome, <%= user.name %></h1>
     <p>
-      <a href="/api/coupon/create">Create a Coupon</a>
-      <a href="/api/user/api_keys">Your API Keys</a>
+      <a href="/api/coupon/create" class="btn btn-primary">Create a Coupon</a>
+      <a href="/api/user/api_keys" class="btn btn-primary">Your API Keys</a>
     </p>
-    <p>
-      <a href="/api/user/logout" class="logout">Logout</a>
-    </p>
-    <p>
-      <a href="/api-docs" class="api">API Documentation</a>
-    </p>
-
-    <div>
-      <div>
-        <table>
-          <caption>
-            Your Coupon(s)
-          </caption>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Description</th>
-              <th>Discount</th>
-              <th>ValidTill</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% coupons.forEach(function(coupon) { %>
-            <tr>
-              <td><a href="/api/coupon/<%= coupon._id%>""><%= coupon.name %></a></td>
-
-              <td><%= coupon.description %></td>
-              <td><%= coupon.discount %></td>
-              <td><%= coupon.validTill %></td>
-            </tr>
-            <% }); %>
-          </tbody>
-        </table>
+    <table class="table table-dark table-striped mt-3">
+      <caption>
+        Your Coupon(s)
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Count</th>
+          <th scope="col">Category</th>
+          <th scope="col">Discount</th>
+          <th scope="col">ValidFrom</th>
+          <th scope="col">ValidTill</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% coupons.forEach(function(coupon) { %>
+        <tr>
+          <td>
+            <a href="/api/coupon/<%= coupon._id%>" class="text-white"
+              ><%= coupon.name %></a
+            >
+          </td>
+          <td><%= coupon.count %></td>
+          <td><%= coupon.category %></td>
+          <td><%= coupon.discount %></td>
+          <td><%= coupon.validFrom %></td>
+          <td><%= coupon.validTill %></td>
+        </tr>
+        <% }); %>
+      </tbody>
+    </table>
+    <div class="d-flex justify-content-end mt-auto">
+      <div class="row mb-3">
+        <div class="col text-end">
+          <a href="/api-docs" class="btn btn-info bg-dark text-white"
+            >API Documentation</a
+          >
+        </div>
       </div>
     </div>
   </body>

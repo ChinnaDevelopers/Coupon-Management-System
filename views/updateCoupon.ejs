@@ -3,124 +3,109 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <style>
-      body {
-        align-items: center;
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-      }
-
-      h1 {
-        background-color: #333;
-        color: white;
-        text-align: center;
-        padding: 1em 0;
-        margin: 0;
-      }
-
-      form {
-        margin: 1em;
-        padding: 1em;
-        border: 1px solid #333;
-      }
-
-      label {
-        display: inline-block;
-        width: 100px;
-      }
-
-      input {
-        margin-bottom: 1em;
-      }
-
-      button {
-        margin-top: 1em;
-      }
-
-      p {
-        text-align: center;
-      }
-      div {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-    </style>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
     <title>Update Coupon</title>
   </head>
-  <body>
-    <h1>Update Coupon</h1>
-    <div>
-      <form action="/api/coupon/update/<%= coupon._id %>" + method="post">
-        <label for="name">Name:</label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          value="<%= coupon.name %>"
-          required
-        /><br />
+  <body class="container bg-dark text-white d-flex flex-column vh-100">
+    <div class="row justify-content-center">
+      <div class="col-4">
+        <h1>Update Coupon</h1>
+        <form action="/api/coupon/update/<%= coupon._id %>" method="post">
+          <div class="mb-3">
+            <label for="name" class="form-label">Name:</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              class="form-control"
+              value="<%= coupon.name %>"
+              required
+            />
+          </div>
 
-        <label for="count">Count:</label>
-        <input
-          type="number"
-          id="count"
-          name="count"
-          value="<%= coupon.count %>"
-          required
-        /><br />
+          <div class="mb-3">
+            <label for="count" class="form-label">Count:</label>
+            <input
+              type="number"
+              id="count"
+              name="count"
+              class="form-control"
+              value="<%= coupon.count %>"
+              required
+            />
+          </div>
 
-        <label for="description">Description:</label>
-        <input
-          type="text"
-          id="description"
-          name="description"
-          value="<%= coupon.description %>"
-          required
-        /><br />
+          <div class="mb-3">
+            <label for="category" class="form-label">Category:</label>
+            <input
+              type="text"
+              id="category"
+              name="category"
+              class="form-control"
+              value="<%= coupon.category %>"
+              required
+            />
+          </div>
 
-        <label for="category">Category:</label>
-        <input
-          type="text"
-          id="category"
-          name="category"
-          value="<%= coupon.category %>"
-          required
-        /><br />
+          <div class="mb-3">
+            <label for="description" class="form-label">Description:</label>
+            <input
+              type="text"
+              id="description"
+              name="description"
+              class="form-control"
+              value="<%= coupon.description %>"
+              required
+            />
+          </div>
 
-        <label for="discount">Discount:</label>
-        <input
-          type="number"
-          id="discount"
-          name="discount"
-          value="<%= coupon.discount %>"
-          required
-        /><br />
+          <div class="mb-3">
+            <label for="discount" class="form-label">Discount:</label>
+            <input
+              type="number"
+              id="discount"
+              name="discount"
+              class="form-control"
+              value="<%= coupon.discount %>"
+              required
+            />
+          </div>
 
-        <label for="validFrom">ValidFrom:</label>
-        <input
-          type="datetime-local"
-          id="validFrom"
-          name="validFrom"
-          value="<%= validFrom %>"
-          required
-        /><br />
+          <div class="mb-3">
+            <label for="validFrom" class="form-label">ValidFrom:</label>
+            <input
+              type="datetime-local"
+              id="validFrom"
+              name="validFrom"
+              class="form-control"
+              value="<%= validFrom %>"
+              required
+            />
+          </div>
 
-        <label for="validTill">ValidTill:</label>
-        <input
-          type="datetime-local"
-          id="validTill"
-          name="validTill"
-          value="<%= validTill %>"
-          required
-        /><br />
+          <div class="mb-3">
+            <label for="validTill" class="form-label">ValidTill:</label>
+            <input
+              type="datetime-local"
+              id="validTill"
+              name="validTill"
+              class="form-control"
+              value="<%= validTill %>"
+              required
+            />
+          </div>
 
-        <button type="submit" style="display: block; margin: 0 auto">
-          Update
-        </button>
-      </form>
+          <div class="mb-3 d-flex justify-content-between">
+            <a href="/api/user" class="btn btn-secondary">Cancel</a>
+            <button type="submit" class="btn btn-primary">Update</button>
+          </div>
+        </form>
+      </div>
     </div>
-    <p><a href="/api/user">Cancel</a></p>
   </body>
 </html>

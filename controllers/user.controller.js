@@ -10,6 +10,11 @@ exports.register = async (req, res) => {
   if (!organization) throw new Error("Organization is required");
   if (!email) throw new Error("Email is required");
   if (!password) throw new Error("Password is required");
+  if (password.length < 6)
+    throw new Error("Password must be atleast 6 characters long");
+
+  const dup = await User.findOne({ email });
+  if (dup) throw new Error("Email already exists");
 
   const user = await User.create({
     name,
@@ -48,10 +53,7 @@ exports.logout = (req, res) => {
     httpOnly: true,
   });
 
-  res.status(200).json({
-    success: true,
-    message: "Logged out successfully",
-  });
+  res.status(200).redirect("/api/user/login");
 };
 
 exports.getUser = async (req, res) => {
@@ -66,7 +68,7 @@ exports.api_keys = async (req, res) => {
   res.status(200).render("api", { apis: user.api_keys });
 };
 
-exports.createToken = async (req, res) => {
+exports.createAPIkey = async (req, res) => {
   const user = await User.findById(req.user._id);
   const api = "sk-" + user.createAPIKey(req.body.apiName);
   let key = {
@@ -77,5 +79,5 @@ exports.createToken = async (req, res) => {
 
   user.api_keys.push(key);
   await user.save();
-  res.redirect("/api/user/tokens");
+  res.redirect("/api/user/api_keys");
 };

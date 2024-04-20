@@ -7,7 +7,7 @@ const {
   getUser,
   logout,
   api_keys,
-  createToken,
+  createAPIkey,
 } = require("../controllers/user.controller");
 const { isLoggedIn } = require("../utils/isLoggedIn");
 
@@ -23,6 +23,6 @@ router.use(isLoggedIn);
 router.get("/", getUser);
 router.get("/logout", logout);
 router.get("/api_keys", api_keys);
-router.post("/tokens", createToken);
+router.post("/api_keys", createAPIkey);
 
 module.exports = router;

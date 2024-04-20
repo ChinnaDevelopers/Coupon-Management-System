@@ -3,7 +3,6 @@ const User = require("../models/user.model");
 
 exports.isLoggedIn = async (req, res, next) => {
   if (req.cookies.token) {
-    
     const user_id = jwt.verify(req.cookies.token, process.env.JWT_SECRET);
 
     const user = await User.findById(user_id._id);
@@ -15,5 +14,7 @@ exports.isLoggedIn = async (req, res, next) => {
     req.user.password = undefined;
     return next();
   }
-  throw new Error("You are not authorized to access this route");
+  throw new Error(
+    "You are not authorized to access this route, please visit /api/user/login to login"
+  );
 };

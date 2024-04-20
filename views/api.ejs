@@ -3,88 +3,25 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
     <style>
-      body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #333;
-        color: #fff;
-      }
-      h1 {
-        text-align: center;
-        color: #fff;
-        margin-top: 50px;
-      }
-      p {
-        text-align: center;
-        margin-top: 20px;
-      }
-      a {
-        text-decoration: none;
-        color: #fff;
-        background-color: #555;
-        padding: 5px 10px;
-        border-radius: 5px;
-        margin: 0 10px;
-      }
-      .dashboard {
-        position: absolute;
-        top: 0;
-        left: 0;
-        padding: 10px;
-      }
-      .user-details {
-        position: absolute;
-        top: 0;
-        left: 0;
-        padding: 10px;
-      }
-      .logout {
-        color: red;
-        background-color: #555;
-        position: absolute;
-        top: 0;
-        right: 0;
-        padding: 10px;
-      }
-      .api {
-        position: absolute;
-        top: 0;
-        right: 43.5%;
-        padding: 10px;
-      }
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        color: #fff;
-      }
-      th {
-        background-color: #555;
-        padding: 10px;
-      }
-      td {
-        padding: 10px;
-        text-align: center;
-      }
-      tr:nth-child(even) {
-        background-color: #555;
-      }
-      tr:nth-child(odd) {
-        background-color: #444;
-      }
       .hidden {
         display: none;
       }
 
       #backdrop {
         position: fixed;
-        width: 100%;
-        height: 100%;
         top: 0;
         left: 0;
-        background: rgba(0, 0, 0, 0.5);
-        z-index: 10;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 100;
       }
 
       #modal {
@@ -92,74 +29,84 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        background: white;
-        padding: 1em;
-        z-index: 100;
+        background-color: white;
+        z-index: 101;
+        padding: 1rem;
+        border-radius: 5px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
       }
-      button {
-        padding: 5px 10px;
-        margin: 10px;
-      }
-      label {
-        margin: 10px;
-        color: black;
-      }
-      input {
-        margin: 10px;
-        padding: 5px;
+
+      .copy {
+        font-size: 0.8rem;
       }
     </style>
     <title>APIs</title>
   </head>
-  <body>
-    <div>
-      <h1>APIs</h1>
-      <a href="" id="showForm" class="api">Create API key</a>
-      <table>
+  <body class="container bg-dark text-white d-flex flex-column vh-100">
+    <div class="container">
+      <h1 class="my-3">APIs</h1>
+      <a href="/api/user" class="btn btn-secondary mb-3">Dashboard</a>
+      <a href="" id="showForm" class="btn btn-primary mb-3">Create API key</a>
+      <table class="table table-dark table-striped mt-3">
         <caption>
           Your API(s):
         </caption>
-        <tr>
-          <th>API Name</th>
-          <th>Key</th>
-          <th>Created At</th>
-        </tr>
-        <% apis.forEach(api => { %>
-        <tr>
-          <td><%= api.apiName %></td>
-          <td>
-            <a href="" data-api-key="<%= api.apiKey %>"
-              ><%= api.apiKey.substring(0,15)+ '....' %></a
-            >
-          </td>
-          <td><%= api.createdAt %></td>
-        </tr>
-        <% }); %>
+        <thead>
+          <tr>
+            <th>API Name</th>
+            <th>Key</th>
+            <th>Created At</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% apis.forEach(api => { %>
+          <tr>
+            <td><%= api.apiName %></td>
+            <td>
+              <a href="" data-api-key="<%= api.apiKey %>" class="text-primary">
+                <%= api.apiKey.substring(0,8)+ '********' + api.apiKey.substring( api.apiKey.length-8, api.apiKey.length) %>
+              </a>
+            </td>
+            <td><%= api.createdAt %></td>
+          </tr>
+          <% }); %>
+        </tbody>
       </table>
-      <a href="/api/user" class="dashboard">Dashboard</a>
-      <a href="/api/user/logout" class="logout">Logout</a>
     </div>
 
     <div id="backdrop" class="hidden"></div>
 
-    <div id="modal" class="hidden">
-      <form method="post" action="/api/user/tokens">
-        <label for="apiName">API Name:</label>
-        <input type="text" id="apiName" name="apiName" />
-        <button type="submit">Create</button>
-      </form>
-      <button type="button" id="cancel">Cancel</button>
+    <div id="modal" class="hidden bg-dark">
+      <form method="post" action="/api/user/api_keys" class="p-3">
+        <div class="mb-3">
+          <label for="apiName" class="form-label">API Name:</label>
+          <input type="text" id="apiName" name="apiName" class="form-control" />
+        </div>
+
+        <div class="mb-3 d-flex justify-content-between">
+          <button type="button" id="cancel" class="btn btn-secondary">
+            Cancel
+          </button>
+          <button type="submit" class="btn btn-primary">Create</button>
+        </div>
     </div>
 
-    <p class="copy">
-      Use
-      <a
-        href=""
-        data-api-key="http://localhost:3000/api/your-api-key?category=your-category"
-        >http://localhost:3000/api/your-api-key?category=your-category</a
-      >
-      to access your coupons
-    </p>
+    <div
+      class="d-flex justify-content-center align-items-end"
+      style="height: 100vh"
+    >
+      <p class="copy text-center">
+        Use
+        <a
+          href=""
+          data-api-key="http://localhost:3000/api/your-api-key?category=your-category"
+          class="text-primary"
+        >
+          http://localhost:3000/api/your-api-key?category=your-category
+        </a>
+        to access your coupons
+      </p>
+    </div>
 
     <script>
       document.addEventListener("DOMContentLoaded", () => {
