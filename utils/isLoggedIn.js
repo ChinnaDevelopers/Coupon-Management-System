@@ -14,7 +14,5 @@ exports.isLoggedIn = async (req, res, next) => {
     req.user.password = undefined;
     return next();
   }
-  throw new Error(
-    "You are not authorized to access this route, please visit /api/user/login to login"
-  );
+  res.status(404).redirect("/api/user/login");
 };
