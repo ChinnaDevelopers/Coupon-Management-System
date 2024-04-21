@@ -64,3 +64,17 @@ exports.getCoupon = async (req, res) => {
     .status(200)
     .render("updateCoupon", { user: req.user, coupon, validFrom, validTill });
 };
+
+exports.useCoupon = async (req, res) => {
+  const coupon = await Coupon.findById(req.params.id);
+  if (coupon.count > 0) {
+    await Coupon.findByIdAndUpdate(req.params.id, {
+      count: coupon.count - 1,
+    });
+    res
+      .status(200)
+      .json({ success: true, message: "Coupon used successfully" });
+  } else {
+    res.status(400).json({ success: false, message: "Coupon out of stock" });
+  }
+};

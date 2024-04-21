@@ -17,6 +17,10 @@ const userSchema = new mongoose.Schema(
       required: [true, "Email is required"],
       unique: true,
     },
+    phone: {
+      type: String,
+      required: [true, "Phone is required"],
+    },
     password: {
       type: String,
       required: [true, "Password is required"],
@@ -24,6 +28,14 @@ const userSchema = new mongoose.Schema(
     api_keys: {
       type: Array,
       default: [],
+    },
+    phone_verified: {
+      type: Boolean,
+      default: false,
+    },
+    verified: {
+      type: Boolean,
+      default: false,
     },
   },
   {
@@ -51,6 +63,11 @@ userSchema.methods.createAPIKey = function (tokenName) {
   return jwt.sign({ _id: this._id, tokenName }, process.env.API_SECRET, {
     expiresIn: process.env.JWT_EXPIRES,
   });
+};
+
+userSchema.methods.verifyPhone = function () {
+  this.phone_verified = true;
+  return this.save();
 };
 
 module.exports = mongoose.model("User", userSchema);

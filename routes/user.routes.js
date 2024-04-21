@@ -8,6 +8,8 @@ const {
   logout,
   api_keys,
   createAPIkey,
+  verifyUser,
+  verifyPhone,
 } = require("../controllers/user.controller");
 const { isLoggedIn } = require("../utils/isLoggedIn");
 
@@ -18,6 +20,9 @@ router.get("/login", (req, res) => {
 });
 router.post("/register", register);
 router.post("/login", login);
+
+router.get("/verify/:token", verifyUser);
+router.get("/verifyPhone/:token", verifyPhone);
 
 router.use(isLoggedIn);
 router.get("/", getUser);

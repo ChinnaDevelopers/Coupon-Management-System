@@ -1,5 +1,4 @@
 const jwt = require("jsonwebtoken");
-const User = require("../models/user.model");
 const Coupon = require("../models/coupon.model");
 
 exports.api = async (req, res) => {
@@ -16,10 +15,7 @@ exports.api = async (req, res) => {
   const coupons = await Coupon.find({
     user_id: decoded._id,
     category,
-  });
+  }).select("-user_id -__v -createdAt -updatedAt");
 
-  res.status(200).json({
-    status: 200,
-    coupons,
-  });
+  res.status(200).render("use_api", { coupons });
 };

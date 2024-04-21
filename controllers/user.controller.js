@@ -1,14 +1,17 @@
 const User = require("../models/user.model");
 const Coupon = require("../models/coupon.model");
 const cookieToken = require("../utils/cookieToken");
-const { name } = require("ejs");
+const sendMail = require("../utils/sendMail");
+const sendSMS = require("../utils/sendSMS");
+const jwt = require("jsonwebtoken");
 
 exports.register = async (req, res) => {
-  const { name, organization, email, password } = req.body;
+  const { name, organization, email, phone, password } = req.body;
 
   if (!name) throw new Error("Name is required");
   if (!organization) throw new Error("Organization is required");
   if (!email) throw new Error("Email is required");
+  if (!phone) throw new Error("Phone is required");
   if (!password) throw new Error("Password is required");
   if (password.length < 6)
     throw new Error("Password must be atleast 6 characters long");
@@ -20,9 +23,22 @@ exports.register = async (req, res) => {
     name,
     organization,
     email,
+    phone,
     password,
   });
-  cookieToken(user, res);
+  const token = user.createJWTToken();
+  let url = `${process.env.URL}/api/user/verify/` + token;
+  sendMail(
+    email,
+    "Verification for Coupon System API",
+    `Hello ${name}, <a href="${url}">Verify</a> your email`
+  );
+  url = `${process.env.URL}/api/user/verifyPhone/` + token;
+  sendSMS(phone, `Hello ${name}, verify your email at ${url}`);
+  res.status(200).render("message", {
+    message: "Verify email and phone and then login to continue",
+    error: false,
+  });
 };
 
 exports.login = async (req, res) => {
@@ -39,11 +55,14 @@ exports.login = async (req, res) => {
     email,
   });
 
-  if (!user) throw new Error("Invalid credentials");
-
+  if (!user) throw new Error("User not found");
   if (!user.comparePassword(password)) throw new Error("Invalid credentials");
+  if (!user.verified)
+    throw new Error("Email not verified, please verify first");
+  if (!user.phone_verified)
+    throw new Error("Phone not verified, please verify");
   user.password = undefined;
-  cookieToken(user, res, "login");
+  cookieToken(user, res);
   res.redirect("/api/user/");
 };
 
@@ -80,4 +99,36 @@ exports.createAPIkey = async (req, res) => {
   user.api_keys.push(key);
   await user.save();
   res.redirect("/api/user/api_keys");
+};
+
+exports.verifyUser = async (req, res) => {
+  const token = req.params.token;
+  const decoded = jwt.verify(token, process.env.JWT_SECRET);
+  if (!decoded) throw new Error("Invalid token");
+  const user = await User.findById(decoded._id);
+
+  if (!user) throw new Error("User not found");
+  if (user.verified)
+    throw new Error(
+      `Email already verified, please visit ${process.env.URL}api/user/login to login`
+    );
+  user.verified = true;
+  await user.save();
+  res.status(200).render("message", {
+    message: `Email verified, please visit ${process.env.URL}api/user/login to login`,
+    error: false,
+  });
+};
+
+exports.verifyPhone = async (req, res) => {
+  const token = req.params.token;
+  const decoded = jwt.verify(token, process.env.JWT_SECRET);
+  const user = await User.findById(decoded._id);
+
+  if (user.phone_verified) throw new Error("Phone already verified");
+  user.verifyPhone();
+  res.status(200).render("message", {
+    message: "Phone verified",
+    error: false,
+  });
 };

@@ -5,9 +5,11 @@ const {
   createCoupon,
   getCoupon,
   updateCoupon,
+  useCoupon,
 } = require("../controllers/coupon.controller");
 const { isLoggedIn } = require("../utils/isLoggedIn");
 
+router.post("/use/:id", useCoupon);
 router.use(isLoggedIn);
 
 router.get("/create", (req, res) =>

@@ -32,7 +32,7 @@ app.use("/api/coupon", couponRoutes);
 app.use("/api", apiRoutes);
 
 app.get("*", (req, res) => {
-  res.status(404).render("error", { message: "Page not found" });
+  res.status(404).render("message", { error: "Page not found" });
 });
 
 app.use(errorHandler);
