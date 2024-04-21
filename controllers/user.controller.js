@@ -110,12 +110,12 @@ exports.verifyUser = async (req, res) => {
   if (!user) throw new Error("User not found");
   if (user.verified)
     throw new Error(
-      `Email already verified, please visit ${process.env.URL}api/user/login to login`
+      `Email already verified, please visit ${process.env.URL}/api/user/login to login`
     );
   user.verified = true;
   await user.save();
   res.status(200).render("message", {
-    message: `Email verified, please visit ${process.env.URL}api/user/login to login`,
+    message: `Email verified, please visit ${process.env.URL}/api/user/login to login`,
     error: false,
   });
 };
