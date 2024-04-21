@@ -9,9 +9,16 @@
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
       crossorigin="anonymous"
     />
+    <style>
+      body {
+        background-image: url("https://images.unsplash.com/photo-1477346611705-65d1883cee1e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+        background-size: cover;
+        background-color: black;
+      }
+    </style>
     <title>Create Coupon</title>
   </head>
-  <body class="container bg-dark text-white d-flex flex-column vh-100">
+  <body class="container text-white d-flex flex-column vh-100">
     <div class="row justify-content-center">
       <div class="col-4">
         <h1>Create Coupon</h1>
@@ -94,7 +101,7 @@
           </div>
 
           <div class="mb-3 d-flex justify-content-between">
-            <a href="/api/user" class="btn btn-secondary">Cancel</a>
+            <a href="/api/user" class="btn btn-danger bg-transparent">Cancel</a>
             <button type="submit" class="btn btn-primary">Create</button>
           </div>
         </form>

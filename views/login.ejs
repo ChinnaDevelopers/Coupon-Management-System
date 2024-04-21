@@ -9,10 +9,17 @@
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
       crossorigin="anonymous"
     />
+    <style>
+      body {
+        background-image: url("https://images.unsplash.com/photo-1477346611705-65d1883cee1e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+        background-size: cover;
+        background-color: black;
+      }
+    </style>
     <title>Login</title>
   </head>
   <body
-    class="container bg-dark text-white d-flex flex-column vh-100 justify-content-center"
+    class="container text-white d-flex flex-column vh-100 justify-content-center"
   >
     <div class="row justify-content-center">
       <div class="col-4">
@@ -38,7 +45,12 @@
               required
             />
           </div>
-          <button type="submit" class="btn btn-primary bg-dark">Login</button>
+          <button
+            type="submit"
+            class="btn btn-primary bg-transparent text-white"
+          >
+            Login
+          </button>
         </form>
         <p class="text-center mt-3">
           Don't have an account?

@@ -10,7 +10,13 @@
       crossorigin="anonymous"
     />
     <style>
+      body {
+        background-image: url('https://images.unsplash.com/photo-1477346611705-65d1883cee1e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+    background-size: cover;
+        background-color: black;
+      }
       .hidden {
+        background-color: black;
         display: none;
       }
 
@@ -42,10 +48,10 @@
     </style>
     <title>APIs</title>
   </head>
-  <body class="container bg-dark text-white d-flex flex-column vh-100">
+  <body class="container text-white d-flex flex-column vh-100">
     <div class="container">
       <h1 class="my-3">APIs</h1>
-      <a href="/api/user" class="btn btn-secondary mb-3">Dashboard</a>
+      <a href="/api/user" class="btn btn-danger mb-3 bg-transparent">Dashboard</a>
       <a href="" id="showForm" class="btn btn-primary mb-3">Create API key</a>
       <table class="table table-dark table-striped mt-3">
         <caption>
@@ -84,10 +90,10 @@
         </div>
 
         <div class="mb-3 d-flex justify-content-between">
-          <button type="button" id="cancel" class="btn btn-secondary">
+          <button type="button" id="cancel" class="btn btn-danger bg-transparent">
             Cancel
           </button>
-          <button type="submit" class="btn btn-primary">Create</button>
+          <button type="submit" class="btn btn-primary bg-tranparent">Create</button>
         </div>
     </div>
 

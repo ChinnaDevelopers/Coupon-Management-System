@@ -10,17 +10,24 @@
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
       crossorigin="anonymous"
     />
+    <style>
+      body {
+        background-image: url('https://images.pexels.com/photos/1097456/pexels-photo-1097456.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+    background-size: cover;
+        background-color: black;
+      }
+    </style>
     <title>Home</title>
   </head>
-  <body class="container bg-dark text-white d-flex flex-column vh-100">
+  <body class="container text-white d-flex flex-column vh-100">
     <div class="row mt-3">
       <div class="col text-start">
-        <a href="/api/user/register" class="btn btn-primary bg-dark"
+        <a href="/api/user/register" class="btn btn-primary bg-transparent text-white"
           >Register</a
         >
       </div>
       <div class="col text-end">
-        <a href="/api/user/login" class="btn btn-primary bg-dark">Login</a>
+        <a href="/api/user/login" class="btn btn-primary bg-transparent text-white">Login</a>
       </div>
     </div>
     <div
@@ -30,7 +37,7 @@
     </div>
     <div class="row mb-3">
       <div class="col text-end">
-        <a href="/api-docs" class="btn btn-info bg-dark text-white"
+        <a href="/api-docs" class="btn btn-info bg-transparent text-white"
           >API Documentation</a
         >
       </div>
