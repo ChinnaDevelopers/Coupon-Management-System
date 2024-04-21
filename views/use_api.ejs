@@ -38,8 +38,7 @@
         <% coupons.forEach(function(coupon) { %>
         <tr>
           <td>
-            <a href="/api/coupon/<%= coupon._id%>" class="text-white"
-              ><%= coupon.name %></a
+            <%= coupon.name %></a
             >
           </td>
           <td><%= coupon.count %></td>
@@ -52,7 +51,7 @@
               href="#"
               class="btn btn-primary use-coupon"
               data-id="<%= coupon._id %>"
-              >Use <%= coupon.name %></a
+              >Use</a
             >
           </td>
         </tr>
