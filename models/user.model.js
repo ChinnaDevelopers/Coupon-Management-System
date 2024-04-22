@@ -33,6 +33,9 @@ const userSchema = new mongoose.Schema(
     //   type: Boolean,
     //   default: false,
     // },
+    verifyOTP: {
+      type: String,
+    },
     verified: {
       type: Boolean,
       default: false,

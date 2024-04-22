@@ -10,6 +10,7 @@ const {
   createAPIkey,
   verifyUser,
   verifyPhone,
+  verifyOTP,
 } = require("../controllers/user.controller");
 const { isLoggedIn } = require("../utils/isLoggedIn");
 
@@ -21,7 +22,13 @@ router.get("/login", (req, res) => {
 router.post("/register", register);
 router.post("/login", login);
 
-router.get("/verify/:token", verifyUser);
+// router.get("/verify", verifyOTP);
+
+router.get("/verify/:token", (req, res) =>
+  res.status(200).render("verify", { token: req.params.token })
+);
+router.post("/verify/:token", verifyOTP);
+
 // router.get("/verifyPhone/:token", verifyPhone);
 
 router.use(isLoggedIn);

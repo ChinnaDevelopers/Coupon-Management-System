@@ -19,28 +19,28 @@ exports.register = async (req, res) => {
   const dup = await User.findOne({ email });
   if (dup) throw new Error("Email already exists");
 
+  const verifyOTP = Math.floor(100000 + Math.random() * 900000);
   const user = await User.create({
     name,
     organization,
     email,
+    verifyOTP,
     phone,
     password,
   });
 
-  let url = `${process.env.URL}/api/user/verify/` + user.createJWTToken();
+  const token = user.createJWTToken();
+
   sendMail(
     email,
-    "Verification for Coupon System API",
-    `Hello ${name}, <a href="${url}">Verify</a> your email`
+    "OPT verification for Coupon System API",
+    `<p>Hello ${name}, <bold>${verifyOTP}</bold> is your OTP for verification</p>`
   );
 
   // url = `${process.env.URL}/api/user/verifyPhone/` + token;
   // sendSMS(phone, `Hello ${name}, verify your email at ${url}`);
 
-  res.status(200).render("message", {
-    message: "Verify email to login",
-    error: false,
-  });
+  res.status(200).redirect("/api/user/verify/" + token);
 };
 
 exports.login = async (req, res) => {
@@ -132,4 +132,23 @@ exports.verifyPhone = async (req, res) => {
     message: "Phone verified",
     error: false,
   });
+};
+
+exports.verifyOTP = async (req, res) => {
+  const { otp } = req.body;
+  const { token } = req.params;
+  const decoded = jwt.verify(token, process.env.JWT_SECRET);
+  const user = await User.findById(decoded._id);
+  if (user.verifyOTP === otp) {
+    user.verified = true;
+    user.verifyOTP = undefined;
+    await user.save();
+    user.password = undefined;
+    cookieToken(user, res);
+    res.redirect("/api/user/");
+  } else {
+    res.status(400).render("message", {
+      error: "Invalid OTP, please try again",
+    });
+  }
 };
