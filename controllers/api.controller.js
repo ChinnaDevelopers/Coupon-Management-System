@@ -3,7 +3,6 @@ const Coupon = require("../models/coupon.model");
 
 exports.api = async (req, res) => {
   const { api_key } = req.params;
-  const { category } = req.query;
 
   if (!api_key) throw new Error("API key is required");
 
@@ -14,7 +13,7 @@ exports.api = async (req, res) => {
 
   const coupons = await Coupon.find({
     user_id: decoded._id,
-    category,
+    ...req.query,
   }).select("-user_id -__v -createdAt -updatedAt");
 
   res.status(200).render("use_api", { coupons });

@@ -11,6 +11,10 @@ exports.createCoupon = async (req, res) => {
   if (!discount) throw new Error("Discount is required");
   if (!validFrom) throw new Error("Valid from date is required");
   if (!validTill) throw new Error("Valid till date is required");
+
+  if (validFrom > validTill)
+    throw new Error("Valid from date must be less than valid till date");
+
   const user_id = req.user._id;
 
   await Coupon.create({
@@ -67,6 +71,11 @@ exports.getCoupon = async (req, res) => {
 
 exports.useCoupon = async (req, res) => {
   const coupon = await Coupon.findById(req.params.id);
+  if (coupon.validTill < new Date()) {
+    return res
+      .status(400)
+      .json({ success: false, message: "Coupon validity completed" });
+  }
   if (coupon.count > 0) {
     await Coupon.findByIdAndUpdate(req.params.id, {
       count: coupon.count - 1,

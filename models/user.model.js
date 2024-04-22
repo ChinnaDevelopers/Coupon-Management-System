@@ -29,10 +29,10 @@ const userSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
-    phone_verified: {
-      type: Boolean,
-      default: false,
-    },
+    // phone_verified: {
+    //   type: Boolean,
+    //   default: false,
+    // },
     verified: {
       type: Boolean,
       default: false,

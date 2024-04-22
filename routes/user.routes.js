@@ -22,7 +22,7 @@ router.post("/register", register);
 router.post("/login", login);
 
 router.get("/verify/:token", verifyUser);
-router.get("/verifyPhone/:token", verifyPhone);
+// router.get("/verifyPhone/:token", verifyPhone);
 
 router.use(isLoggedIn);
 router.get("/", getUser);
