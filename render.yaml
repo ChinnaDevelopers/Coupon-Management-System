@@ -1,0 +1,33 @@
+# Exported from Render on 2024-04-22T17:24:23Z
+services:
+- type: web
+  name: Coupon-API
+  runtime: node
+  repo: https://github.com/ManoharNaidu/Coupon-API
+  plan: free
+  envVars:
+  - key: URL
+    sync: false
+  - key: TWILIO_PHONE_NUMBER
+    sync: false
+  - key: TWILIO_AUTH_TOKEN
+    sync: false
+  - key: TWILIO_ACCOUNT_SID
+    sync: false
+  - key: PASSWORD
+    sync: false
+  - key: MONGODB_URI
+    sync: false
+  - key: JWT_SECRET
+    sync: false
+  - key: JWT_EXPIRES
+    sync: false
+  - key: EMAIL
+    sync: false
+  - key: API_SECRET
+    sync: false
+  region: oregon
+  buildCommand: npm install
+  startCommand: node index.js
+  pullRequestPreviewsEnabled: true
+version: "1"
