@@ -11,6 +11,8 @@ const {
   verifyUser,
   verifyPhone,
   verifyOTP,
+  deleteUser,
+  updateUser,
 } = require("../controllers/user.controller");
 const { isLoggedIn } = require("../utils/isLoggedIn");
 
@@ -36,5 +38,7 @@ router.get("/", getUser);
 router.get("/logout", logout);
 router.get("/api_keys", api_keys);
 router.post("/api_keys", createAPIkey);
+router.post("/:id", updateUser);
+router.delete("/:id", deleteUser);
 
 module.exports = router;

@@ -87,3 +87,8 @@ exports.useCoupon = async (req, res) => {
     res.status(400).json({ success: false, message: "Coupon out of stock" });
   }
 };
+
+exports.deleteCoupon = async (req, res) => {
+  await Coupon.findByIdAndDelete(req.params.id);
+  res.status(200).json({ success: true });
+};

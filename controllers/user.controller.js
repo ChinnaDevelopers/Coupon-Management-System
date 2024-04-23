@@ -152,3 +152,24 @@ exports.verifyOTP = async (req, res) => {
     });
   }
 };
+
+exports.updateUser = async (req, res) => {
+  const user = await User.findById(req.params.id);
+  if (!user) throw new Error("User not found");
+  user.name = req.body.name || user.name;
+  user.organization = req.body.organization || user.organization;
+  user.email = req.body.email || user.email;
+  user.phone = req.body.phone || user.phone;
+  user.password = req.body.password || user.password;
+
+  await user.save();
+  res.status(200).redirect("/api/user/");
+};
+
+exports.deleteUser = async (req, res) => {
+  const user = await User.findById(req.params.id);
+  if (!user) throw new Error("User not found");
+  await User.deleteOne({ _id: req.params.id });
+  await Coupon.deleteMany({ user_id: req.params.id });
+  res.status(200).json({ success: true });
+};
