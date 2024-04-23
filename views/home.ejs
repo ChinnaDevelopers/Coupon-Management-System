@@ -3,7 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -12,9 +15,9 @@
     />
     <style>
       body {
-        background-image: url('https://images.pexels.com/photos/1097456/pexels-photo-1097456.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+        background-image: url("https://images.pexels.com/photos/1097456/pexels-photo-1097456.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
         background-repeat: no-repeat;
-    background-size: cover;
+        background-size: cover;
         background-color: black;
       }
     </style>
@@ -22,13 +25,19 @@
   </head>
   <body class="container text-white d-flex flex-column vh-100">
     <div class="row mt-3">
-      <div class="col text-start">
-        <a href="/api/user/register" class="btn btn-primary bg-transparent text-white"
+      <div class="col text-sm-start text-center">
+        <a
+          href="/api/user/register"
+          class="btn btn-primary bg-transparent text-white"
           >Register</a
         >
       </div>
-      <div class="col text-end">
-        <a href="/api/user/login" class="btn btn-primary bg-transparent text-white">Login</a>
+      <div class="col text-sm-end text-end">
+        <a
+          href="/api/user/login"
+          class="btn btn-primary bg-transparent text-white"
+          >Login</a
+        >
       </div>
     </div>
     <div
@@ -36,18 +45,32 @@
     >
       <h1 class="text-center">Welcome to Coupon System Management Website.</h1>
     </div>
-    <div class="row mb-3">
-      <div class="col text-end">
+
+    <div class="row align-items-end justify-content-between mb-3">
+      <div class="col-auto">
+        <a
+          href="https://github.com/ManoharNaidu/Coupon-API.git"
+          class="text-white"
+          target="_blank"
+        >
+          <i class="fab fa-github fa-3x"></i>
+        </a>
+      </div>
+      <div class="col-auto">
+        <span class="text-muted"
+          >Created by
+          <a
+            href="https://www.linkedin.com/in/manohar-naidu/"
+            style="text-decoration: none"
+            >Manohar</a
+          ></span
+        >
+      </div>
+      <div class="col-auto">
         <a href="/api-docs" class="btn btn-info bg-transparent text-white"
           >API Documentation</a
         >
       </div>
-      <div class="row align-items-end">
-        <div class="col text-start">
-          <a href="https://github.com/ManoharNaidu/Coupon-API.git" class="text-white" target="_blank">
-            <i class="fab fa-github fa-2x"></i>
-          </a>
-        </div>
-      </div>
+    </div>
   </body>
 </html>
