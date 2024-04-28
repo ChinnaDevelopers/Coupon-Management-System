@@ -34,7 +34,7 @@ This is a RESTful API for managing coupons.
 
 ## API Documentation
 
-For detailed information on how to use the API, please refer to the [/api-docs](https://coupon-api-l11h.onrender.com/api-docs) after starting the server.
+For detailed information on how to use the API, please refer to the [/api-docs](https://coupon-api-l11h.onrender.com/api-docs) route after starting the server.
 
 ## Contributing
 
