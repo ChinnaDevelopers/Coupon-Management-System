@@ -1,4 +1,5 @@
 const Coupon = require("../models/coupon.model");
+const schedule = require("node-schedule");
 
 exports.createCoupon = async (req, res) => {
   const { name, count, category, description, discount, validFrom, validTill } =
@@ -17,7 +18,7 @@ exports.createCoupon = async (req, res) => {
 
   const user_id = req.user._id;
 
-  await Coupon.create({
+  const coupon = await Coupon.create({
     name,
     user_id,
     count,
@@ -26,6 +27,10 @@ exports.createCoupon = async (req, res) => {
     discount,
     validFrom,
     validTill,
+  });
+
+  schedule.scheduleJob(new Date(validTill), async function () {
+    await Coupon.findByIdAndDelete(coupon._id);
   });
   res.status(201).redirect("/api/user/");
 };
@@ -71,6 +76,11 @@ exports.getCoupon = async (req, res) => {
 
 exports.useCoupon = async (req, res) => {
   const coupon = await Coupon.findById(req.params.id);
+  if (!coupon) {
+    return res
+      .status(404)
+      .json({ success: false, message: "Coupon not found" });
+  }
   if (coupon.validTill < new Date()) {
     return res
       .status(400)
@@ -84,6 +94,7 @@ exports.useCoupon = async (req, res) => {
       .status(200)
       .json({ success: true, message: "Coupon used successfully" });
   } else {
+    await Coupon.findByIdAndDelete(req.params.id);
     res.status(400).json({ success: false, message: "Coupon out of stock" });
   }
 };

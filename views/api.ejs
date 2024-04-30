@@ -70,7 +70,7 @@
           <tr>
             <td><%= api.apiName %></td>
             <td>
-              <a href="" data-api-key="<%= api.apiKey %>" class="text-primary">
+              <a href="" data-api-key="<%= process.env.URL + '/api/' + api.apiKey + '?category=your_category' %>" class="text-primary">
                 <%= api.apiKey.substring(0,8)+ '********' + api.apiKey.substring( api.apiKey.length-8, api.apiKey.length) %>
               </a>
             </td>
